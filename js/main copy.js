@@ -25,6 +25,7 @@ var cards = [
 var cardElement;
 var cardsInPlay = [];
 var cardsInPlayPosition = []
+// var reset = getElementById('reset');
 
 
 // flip the cards back over if they don't match
@@ -59,7 +60,7 @@ function flipCard() {
 
 /*function reset(){
 	var removeCards = document.getElementsByTagName('img');
-	removeCards.parentNode.reoveChild(removeCards);
+	removeCards.parentNode.removeChild(removeCards);
 	createBoard();
 }*/
 
@@ -70,6 +71,7 @@ function createBoard(){
 		cardElement.setAttribute('data-id', i);
 		cardElement.addEventListener('click', flipCard);
 		document.getElementById('game-board').appendChild(cardElement);
+		// reset.addEventListener('click', reset);
 	}
 }
 
