@@ -24,20 +24,30 @@ var cards = [
 
 var cardElement;
 var cardsInPlay = [];
+var cardsInPlayPosition = []
+
+
+// flip the cards back over if they don't match
+function noMatch() {
+	for (i=0; i<cardsInPlayPosition.length; i++){
+		// document.querySelector(`img[data-id="${cardsInPlayPosition[i]}"]`).setAttribute('src', "images/back.png");
+		$(`[data-id="${cardsInPlayPosition[i]}"]`).attr('src', 'images/back.png')
+	}
+}
 
 function checkForMatch() {
 	if (cardsInPlay[0] === cardsInPlay[1]){
 			alert("we have a match!");
 	} else {
 			alert("no match this time");
-			// noMatch();
+			noMatch();
 	}
 }
 
-// upon clicking card
 function flipCard() {
 	var cardID = this.getAttribute('data-id');
 	cardsInPlay.push(cards[cardID].rank);
+	cardsInPlayPosition.push(this['data-id']);
 	this.setAttribute('src', cards[cardID].cardImage);
 	this.removeEventListener('click', flipCard);
 	// check to see if two cards have been picked
@@ -47,6 +57,11 @@ function flipCard() {
 	};
 }
 
+/*function reset(){
+	var removeCards = document.getElementsByTagName('img');
+	removeCards.parentNode.reoveChild(removeCards);
+	createBoard();
+}*/
 
 function createBoard(){
 	for (i=0; i<cards.length; i++){
@@ -55,12 +70,9 @@ function createBoard(){
 		cardElement.setAttribute('data-id', i);
 		cardElement.addEventListener('click', flipCard);
 		document.getElementById('game-board').appendChild(cardElement);
-		var button = document.getElementById('reset');
-		button.addEventListener('click', reset);
 	}
 }
 
 
 createBoard();
-reset();
 
