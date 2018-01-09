@@ -24,8 +24,19 @@ var cards = [
 
 
 var cardsInPlay = [];
-var cardElements ={};
+var cardElements = {};
+var completedCards = [];
+const resetButton = document.getElementById('reset');
 const CARD_BACK_SRC = "images/back.png"
+
+function reset() {
+	completedCards.forEach(function(card){
+		card.setAttribute('src', CARD_BACK_SRC);
+		card.addEventListener('click', flipCard);
+	});
+	completedCards = [];
+	cardsInPlay =[];	
+}
 
 // flip cards back over if they don't match
 function noMatch() {
@@ -50,6 +61,7 @@ function checkForMatch() {
 // upon clicking card
 function flipCard() {
 	cardsInPlay.push(this);
+	completedCards.push(this);
 	this.setAttribute('src', this.cardData.cardImage);
 	this.removeEventListener('click', flipCard);
 	// check to see if two cards have been picked
@@ -68,6 +80,7 @@ function createBoard(){
 		cardElement.addEventListener('click', flipCard);
 		document.getElementById('game-board').appendChild(cardElement);
 		cardElements[ 'card' + i ] = cardElement;
+		resetButton.addEventListener('click', reset);
 	}
 }
 
