@@ -22,23 +22,35 @@ var cards = [
 
 ];
 
-var cardElement;
+
 var cardsInPlay = [];
+var cardElements ={};
+const CARD_BACK_SRC = "images/back.png"
+
+// flip cards back over if they don't match
+function noMatch() {
+	console.log("no match this time");
+		cardsInPlay.forEach(function(card){
+			card.setAttribute('src', CARD_BACK_SRC);
+			card.addEventListener('click', flipCard);
+		});
+		cardsInPlay = [];
+}
 
 function checkForMatch() {
-	if (cardsInPlay[0] === cardsInPlay[1]){
-			alert("we have a match!");
+	console.log(cardsInPlay)
+	if (cardsInPlay[0].cardData.rank === cardsInPlay[1].cardData.rank) {
+		console.log('we have a match');
+		cardsInPlay = [];
 	} else {
-			alert("no match this time");
-			// noMatch();
+		noMatch();
 	}
 }
 
 // upon clicking card
 function flipCard() {
-	var cardID = this.getAttribute('data-id');
-	cardsInPlay.push(cards[cardID].rank);
-	this.setAttribute('src', cards[cardID].cardImage);
+	cardsInPlay.push(this);
+	this.setAttribute('src', this.cardData.cardImage);
 	this.removeEventListener('click', flipCard);
 	// check to see if two cards have been picked
 	var equalCards = cardsInPlay.length % 2;
@@ -47,20 +59,19 @@ function flipCard() {
 	};
 }
 
-
 function createBoard(){
-	for (i=0; i<cards.length; i++){
+	for (var i=0; i<cards.length; i++){
 		cardElement = document.createElement('img');
-		cardElement.setAttribute('src', "images/back.png");
+		cardElement.setAttribute('src', CARD_BACK_SRC);
+		cardElement.cardData = cards[ i ];
 		cardElement.setAttribute('data-id', i);
 		cardElement.addEventListener('click', flipCard);
 		document.getElementById('game-board').appendChild(cardElement);
-		var button = document.getElementById('reset');
-		button.addEventListener('click', reset);
+		cardElements[ 'card' + i ] = cardElement;
 	}
 }
 
 
+
 createBoard();
-reset();
 
