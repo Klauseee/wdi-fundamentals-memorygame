@@ -49,7 +49,6 @@ function noMatch() {
 }
 
 function checkForMatch() {
-	console.log(cardsInPlay)
 	if (cardsInPlay[0].cardData.rank === cardsInPlay[1].cardData.rank) {
 		console.log('we have a match');
 		cardsInPlay = [];
