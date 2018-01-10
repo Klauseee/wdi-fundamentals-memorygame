@@ -25,18 +25,46 @@ var cards = [
 var cardElement;
 var cardsInPlay = [];
 var completedCards = [];
+var randomNumbers = [];	
+var gameBoard = document.getElementById('game-board');
 const resetButton = document.getElementById('reset');
 const shuffleButton = document.getElementById('shuffle');
 const CARD_BACK_SRC = "images/back.png";
 
-function shuffle(){
-	var randomNumber = Math.floor(Math.random() * cards.length);
-	cardElement.cardData = cards[randomNumber];
-	document.getElementById('game-board').appendChild(cardElement);
 
+function randomise (array) {
+	var i = 0,
+	    j = 0,
+	    temp;
+
+	for (i = array.length - 1; i > 0; i -= 1) {
+	    j = Math.floor(Math.random() * (i + 1))
+	    temp = array[i]
+	    array[i] = array[j]
+	    array[j] = temp
+ 	}
+}
+
+// randomise cards 
+function shuffle(){
+	while (gameBoard.firstChild) {
+		gameBoard.removeChild(gameBoard.firstChild);
+	};
+	
+	randomise(randomNumbers);
+	
+	for (i=0; i<cards.length; i++){
+		cardElement = document.createElement('img');
+		cardElement.setAttribute('src', CARD_BACK_SRC);
+		cardElement.cardData = cards[randomNumbers[i]];
+		gameBoard.appendChild(cardElement);
+		cardElement.addEventListener('click', flipCard);
+
+	}
 
 }
 
+// return game to inital state
 function reset() {
 	completedCards.forEach(function(card){
 		card.setAttribute('src', CARD_BACK_SRC);
@@ -79,18 +107,17 @@ function flipCard() {
 }
 
 function createBoard(){
-	for (var i=0; i<cards.length; i++){
+	for (i=0; i<cards.length; i++){
 		cardElement = document.createElement('img');
 		cardElement.setAttribute('src', CARD_BACK_SRC);
-		cardElement.cardData = cards[ i ];
+		cardElement.cardData = cards[i];
 		cardElement.addEventListener('click', flipCard);
-		document.getElementById('game-board').appendChild(cardElement);
+		gameBoard.appendChild(cardElement);
 		resetButton.addEventListener('click', reset);
 		shuffleButton.addEventListener('click', shuffle);
+		randomNumbers.push(i);
 	}
 }
-
-
 
 createBoard();
 
