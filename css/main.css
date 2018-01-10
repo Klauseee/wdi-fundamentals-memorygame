@@ -1,3 +1,8 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
 body {
 	text-align: center;
 	margin: 0;
@@ -62,6 +67,9 @@ img {
 }
 
 footer {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
 	text-transform: uppercase;
 	padding: 0 20;
 	background-color: #0D2C40;
@@ -74,11 +82,13 @@ footer {
 .copyright {
 	font-family: "Raleway";
 	float: left;
+	padding-left: 5px;
 }
 
 .message {
 	font-family: "Raleway";
 	float: right;
+	padding-right: 5px;
 }
 
 .clearfix:after {
