@@ -22,12 +22,20 @@ var cards = [
 
 ];
 
-
+var cardElement;
 var cardsInPlay = [];
-var cardElements = {};
 var completedCards = [];
 const resetButton = document.getElementById('reset');
-const CARD_BACK_SRC = "images/back.png"
+const shuffleButton = document.getElementById('shuffle');
+const CARD_BACK_SRC = "images/back.png";
+
+function shuffle(){
+	var randomNumber = Math.floor(Math.random() * cards.length);
+	cardElement.cardData = cards[randomNumber];
+	document.getElementById('game-board').appendChild(cardElement);
+
+
+}
 
 function reset() {
 	completedCards.forEach(function(card){
@@ -75,11 +83,10 @@ function createBoard(){
 		cardElement = document.createElement('img');
 		cardElement.setAttribute('src', CARD_BACK_SRC);
 		cardElement.cardData = cards[ i ];
-		cardElement.setAttribute('data-id', i);
 		cardElement.addEventListener('click', flipCard);
 		document.getElementById('game-board').appendChild(cardElement);
-		cardElements[ 'card' + i ] = cardElement;
 		resetButton.addEventListener('click', reset);
+		shuffleButton.addEventListener('click', shuffle);
 	}
 }
 
