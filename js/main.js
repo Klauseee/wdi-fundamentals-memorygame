@@ -74,11 +74,9 @@ function createBoard(){
 	for (var i=0; i<cards.length; i++){
 		cardElement = document.createElement('img');
 		cardElement.setAttribute('src', CARD_BACK_SRC);
-		cardElement.cardData = cards[ i ];
-		cardElement.setAttribute('data-id', i);
+		cardElement.cardData = cards[i];	
 		cardElement.addEventListener('click', flipCard);
 		document.getElementById('game-board').appendChild(cardElement);
-		cardElements[ 'card' + i ] = cardElement;
 		resetButton.addEventListener('click', reset);
 	}
 }
