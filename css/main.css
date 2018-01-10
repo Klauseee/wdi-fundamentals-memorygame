@@ -1,3 +1,8 @@
+html {
+	min-height: 100%;
+	position: relative;
+}
+
 body {
 	text-align: center;
 	margin: 0;
@@ -69,6 +74,9 @@ footer {
 	font-size: 14px;
 	letter-spacing: .08em;
 	font-weight: 500;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
 .copyright {
