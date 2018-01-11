@@ -61,6 +61,7 @@ function shuffle(){
 	randomisedPack.forEach(card => {
 		gameBoard.removeChild(card);
 		gameBoard.appendChild(card);
+		hideCard(card);
 	})
 
 }
@@ -104,7 +105,6 @@ function flipCard() {
 function createBoard(){
 	resetButton.addEventListener('click', reset);
 	shuffleButton.addEventListener('click', shuffle);
-
 	for (i=0; i<cards.length; i++){
 		cardElement = document.createElement('img');
 		cardElement.cardData = cards[i];
