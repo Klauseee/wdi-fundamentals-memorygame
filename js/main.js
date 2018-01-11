@@ -1,4 +1,4 @@
-var cards = [
+const cards = [
 	{
 		rank: 'queen',
 		suit: 'hearts',
@@ -32,44 +32,42 @@ const shuffleButton = document.getElementById('shuffle');
 const CARD_BACK_SRC = "images/back.png";
 
 
-function randomise (array) {
-	var i = 0,
-	    j = 0,
-	    temp;
+function randomise(array) {
+	var i = 0;
+	var j = 0;
+	var temp;
+	// 'clone' input array using .slice()
+	var newArray = array.slice();
 
-	for (i = array.length - 1; i > 0; i -= 1) {
+	for (i = newArray.length - 1; i > 0; i -= 1) {
 	    j = Math.floor(Math.random() * (i + 1))
-	    temp = array[i]
-	    array[i] = array[j]
-	    array[j] = temp
+	    temp = newArray[i]
+	    newArray[i] = newArray[j]
+	    newArray[j] = temp
  	}
+ 	return newArray;
+}
+
+function hideCard(card){
+	card.setAttribute('src', CARD_BACK_SRC);
+	card.addEventListener('click', flipCard);
 }
 
 // randomise cards 
 function shuffle(){
-	while (gameBoard.firstChild) {
-		gameBoard.removeChild(gameBoard.firstChild);
-	};
-	
-	randomise(randomNumbers);
-	
-	for (i=0; i<cards.length; i++){
-		cardElement = document.createElement('img');
-		cardElement.setAttribute('src', CARD_BACK_SRC);
-		cardElement.cardData = cards[randomNumbers[i]];
-		gameBoard.appendChild(cardElement);
-		cardElement.addEventListener('click', flipCard);
+	const pack = Array.from(gameBoard.childNodes);
+	const randomisedPack = randomise(pack);
 
-	}
+	randomisedPack.forEach(card => {
+		gameBoard.removeChild(card);
+		gameBoard.appendChild(card);
+	})
 
 }
 
 // return game to inital state
 function reset() {
-	completedCards.forEach(function(card){
-		card.setAttribute('src', CARD_BACK_SRC);
-		card.addEventListener('click', flipCard);
-	});
+	completedCards.forEach(hideCard);
 	completedCards = [];
 	cardsInPlay =[];	
 }
@@ -77,10 +75,7 @@ function reset() {
 // flip cards back over if they don't match
 function noMatch() {
 	console.log("no match this time");
-		cardsInPlay.forEach(function(card){
-			card.setAttribute('src', CARD_BACK_SRC);
-			card.addEventListener('click', flipCard);
-		});
+		cardsInPlay.forEach(hideCard);
 		cardsInPlay = [];
 }
 
@@ -107,14 +102,14 @@ function flipCard() {
 }
 
 function createBoard(){
+	resetButton.addEventListener('click', reset);
+	shuffleButton.addEventListener('click', shuffle);
+
 	for (i=0; i<cards.length; i++){
 		cardElement = document.createElement('img');
-		cardElement.setAttribute('src', CARD_BACK_SRC);
 		cardElement.cardData = cards[i];
-		cardElement.addEventListener('click', flipCard);
+		hideCard(cardElement);
 		gameBoard.appendChild(cardElement);
-		resetButton.addEventListener('click', reset);
-		shuffleButton.addEventListener('click', shuffle);
 		randomNumbers.push(i);
 	}
 }
