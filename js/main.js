@@ -25,7 +25,6 @@ const cards = [
 var cardElement;
 var cardsInPlay = [];
 var completedCards = [];
-var randomNumbers = [];	
 var gameBoard = document.getElementById('game-board');
 const resetButton = document.getElementById('reset');
 const shuffleButton = document.getElementById('shuffle');
@@ -110,7 +109,6 @@ function createBoard(){
 		cardElement.cardData = cards[i];
 		hideCard(cardElement);
 		gameBoard.appendChild(cardElement);
-		randomNumbers.push(i);
 	}
 }
 
